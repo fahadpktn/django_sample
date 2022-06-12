@@ -25,15 +25,21 @@ def register(request):
 
 def login_user(request): 
     if request.method == 'POST':
-     uname = request.POST['uname']
-     psw = request.POST['psw']
-    user = authenticate(username=uname,psw=psw)
-    if user is not None:
-        login(request,user)
-    else:
-        messages.error(request,"Error,try again")
-        return(redirect,'index')
-        
+       username = request.POST['username']
+       psw = request.POST['psw']
+       user = authenticate(username=username, psw=psw)
+       if user is not None:
+          login(request,user)
+          return redirect('index')
+
+
+       else:
+           messages.error(request,"Error,try again")
+           return render(request,'login_user.html')
+
+
     return render(request,'login_user.html')
+    
+        
 
 
