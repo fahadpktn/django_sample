@@ -79,12 +79,12 @@
   
     <div class="container">
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="username" required>
+      <input type="text" placeholder="Enter Username" name="username" required id="username" >
   
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="psw" required id="psw" >
           
-      <button type="submit">Login</button>
+      <button type="button" id="btn1">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -95,6 +95,40 @@
       <span class="psw">Forgot <a href="#">password?</a></span>
     </div>
   </form>
-  
   </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    $('#btn1').click(()=>
+    {
+     var username = $("#username").val()
+     var psw = $("#psw").val()
+    console.log(username,psw)
+    var data ={
+      'csrfmiddlewaretoken': '{{csrf_token}}',
+      'username' :username,
+      'psw': psw
+    }
+    if(username == ''){
+        alert("Enter valid username!")
+    }else if(psw == ''){
+        alert("enter valid password")
+    }else{
+      $.ajax({
+        url:'/'
+        method:'POST',
+        data:'data',
+        dataType:'json',
+        success:function(data){
+          if(data.success){
+            alert('user logged in')
+            window.location.replace('index')
+            }else{
+              alert('user not authenticated!')
+
+            }
+        }
+      })
+    }
+    })
+  </script>
   </html>
